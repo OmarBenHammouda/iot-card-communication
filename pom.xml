@@ -8,6 +8,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>17</maven.compiler.release>
-        <exec.mainClass>com.mycompany.tp1_frame_work.Tp1_Frame_Work</exec.mainClass>
+        <exec.mainClass>com.mycompany.tp1_frame_work.Serveur</exec.mainClass>
     </properties>
 </project>

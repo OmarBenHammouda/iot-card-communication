@@ -11,21 +11,17 @@ import java.util.Random;
  * @author omar
  */
 public class PacketGenerator {
+    private static final Random random = new Random();
 
-    private Random random = new Random();
-
-    
-    public Packet generatePacket(long cardId) {
-        double temperature = 15 + (30 - 15) * random.nextDouble(); // Température aléatoire entre 15°C et 30°C
-        String gpsLocation = generateRandomGps(); 
-        long timeFrame = random.nextLong(); 
-        return new Packet(temperature, gpsLocation, cardId, timeFrame);
+    public static Packet generatePacket(long cardId, long timeFrame) {
+        int temperature = 10 + random.nextInt(31);
+        String gpsCoordinates = generategpsCoordinates();
+        return new Packet(cardId, timeFrame, temperature, gpsCoordinates);
+    }
+    private static String generategpsCoordinates() {
+        double latitude = 35 + (50 - 35) * random.nextDouble();
+        double longitude = -120 + (0 - (-120)) * random.nextDouble();
+        return String.format("%.4f,%.4f", latitude, longitude);
     }
 
-    
-    private String generateRandomGps() {
-        double lat = 35 + (50 - 35) * random.nextDouble(); // Latitude entre 35 et 50
-        double lon = -120 + (0 - (-120)) * random.nextDouble(); // Longitude entre -120 et 0
-        return String.format("%.4f,%.4f", lat, lon); 
-    }
 }

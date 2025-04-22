@@ -16,7 +16,7 @@ public class CardReader {
    
     public static long readCardId() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Veuillez entrer l'identifiant de la carte (64 bits) : ");
+        System.out.print("Veuillez entrer l'identifiant de la carte: ");
         long cardId = scanner.nextLong();
         return cardId;
     }

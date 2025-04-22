@@ -8,80 +8,38 @@ import java.io.Serializable;
  *
  * @author omar
  */
-public class Packet {
+public class Packet implements Serializable {
+    private long cardId;
+    private long timeFrame;
+    private int temperature;
+    private String gpsCoordinates;
+    private int checksum;
 
-    private double temperature; 
-    private String gpsLocation; // Localisation GPS sous forme de chaîne (latitude, longitude)
-    private long cardId; 
-    private long timeFrame; 
-    private int checksum; 
-
-    // Constructeur
-    public Packet(double temperature, String gpsLocation, long cardId, long timeFrame) {
-        this.temperature = temperature;
-        this.gpsLocation = gpsLocation;
+    public Packet(long cardId, long timeFrame, int temperature, String gpsCoordinates) {
         this.cardId = cardId;
         this.timeFrame = timeFrame;
+        this.temperature = temperature;
+        this.gpsCoordinates = gpsCoordinates;
         this.checksum = calculateChecksum();
     }
 
-    
     private int calculateChecksum() {
-        
-        return (int) (temperature + gpsLocation.hashCode() + cardId + timeFrame) % 255;
+        return (int) (temperature + gpsCoordinates.hashCode() + cardId + timeFrame) % 255;
     }
 
-    
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-       
-    }
-
-    public String getGpsLocation() {
-        return gpsLocation;
-    }
-
-    public void setGpsLocation(String gpsLocation) {
-        this.gpsLocation = gpsLocation;
-         
-    }
-
-    public long getCardId() {
-        return cardId;
-    }
-
-    public void setCardId(long cardId) {
-        this.cardId = cardId;
-        
-    }
-
-    public long getTimeFrame() {
-        return timeFrame;
-    }
-
-    public void setTimeFrame(long timeFrame) {
-        this.timeFrame = timeFrame;
-        
-    }
-
-    public int getChecksum() {
-        return checksum;
+    public boolean isValid() {
+        return this.checksum == calculateChecksum();
     }
 
     @Override
     public String toString() {
         return "Packet{" +
-                "temperature=" + temperature +
-                ", gpsLocation='" + gpsLocation + '\'' +
-                ", cardId=" + cardId +
+                "cardId=" + cardId +
                 ", timeFrame=" + timeFrame +
+                ", temperature=" + temperature +
+                ", gpsCoordinates='" + gpsCoordinates + '\'' +
                 ", checksum=" + checksum +
                 '}';
     }
-
 }
 

@@ -9,7 +9,7 @@ package com.mycompany.tp1_frame_work;
  * @author omar
  */
 
-public class Tp1_Frame_Work{
+/*public class Tp1_Frame_Work{
 
     public static void main(String[] args) {
         // Démarrer le serveur dans un thread séparé
@@ -33,3 +33,4 @@ public class Tp1_Frame_Work{
     }
 }
 
+*/

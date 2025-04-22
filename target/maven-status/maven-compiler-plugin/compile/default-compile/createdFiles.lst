@@ -1,6 +1,5 @@
 com/mycompany/tp1_frame_work/CardReader.class
 com/mycompany/tp1_frame_work/Packet.class
-com/mycompany/tp1_frame_work/Tp1_Frame_Work.class
 com/mycompany/tp1_frame_work/Serveur.class
 com/mycompany/tp1_frame_work/Client.class
 com/mycompany/tp1_frame_work/PacketGenerator.class

@@ -3,52 +3,46 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.tp1_frame_work;
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.Socket;
+
 /**
  *
  * @author omar
  */
 public class Client {
 
-    private static final String SERVER_HOST = "localhost"; 
-    private static final int SERVER_PORT = 12345; 
 
-    // Méthode pour se connecter au serveur et recevoir des paquets
-    public static void receivePackets() {
-        try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
-             ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
+    public static void main(String[] args) {
+        try (Socket socket = new Socket("localhost", 12345);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 
-            System.out.println("Connexion au serveur établie...");
+            System.out.println("Connexion au serveur établie");
 
-            // Lire les paquets envoyés par le serveur
-            while (true) {
-                try {
-                    Packet packet = (Packet) in.readObject();
+            String packet;
+            while ((packet = in.readLine()) != null) {
+                if (filterPacket(packet)) {
                     System.out.println("Paquet reçu : " + packet);
-
-                    // Filtrer les paquets selon des critères spécifiques (exemple : température)
-                    if (filterPacket(packet)) {
-                        System.out.println("Paquet filtré : " + packet);
-                    }
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // Filtre les paquets selon des critères (ici, on filtre les paquets avec une température supérieure à 25°C)
-    public static boolean filterPacket(Packet packet) {
-        // Filtrage : par exemple, on affiche uniquement les paquets avec une température > 25°C
-        return packet.getTemperature() > 25;
-    }
-
-    public static void main(String[] args) {
-        // Appeler la méthode pour recevoir et filtrer les paquets
-        receivePackets();
+    private static boolean filterPacket(String packet) {
+        try {
+            String[] fields = packet.split(",");
+            for (String field : fields) {
+                if (field.contains("temperature=")) {
+                    int temperature = Integer.parseInt(field.split("=")[1]);
+                    return temperature < 30;
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Erreur" + e.getMessage());
+        }
+        return false;
     }
 }
